@@ -1,0 +1,75 @@
+pip install flask
+from flask import Flask, render_template, request, redirect, session
+
+app = Flask(__compitemate__)
+app.secret_key = "peerlearning"
+
+posts = []
+
+# Home Page
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Register
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        with open("users.txt", "a") as file:
+            file.write(f"{username},{password}\n")
+
+        return redirect('/login')
+
+    return render_template('register.html')
+
+# Login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        with open("users.txt", "r") as file:
+            users = file.readlines()
+
+        for user in users:
+            u, p = user.strip().split(',')
+
+            if u == username and p == password:
+                session['username'] = username
+                return redirect('/dashboard')
+
+        return "Invalid Username or Password"
+
+    return render_template('login.html')
+
+# Dashboard
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    if 'username' not in session:
+        return redirect('/login')
+
+    if request.method == 'POST':
+        content = request.form['content']
+        posts.append({
+            'user': session['username'],
+            'content': content
+        })
+
+    return render_template(
+        'dashboard.html',
+        username=session['username'],
+        posts=posts
+    )
+
+# Logout
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect('/')
+
+if __name__ == '__main__':
+    app.run(debug=True)

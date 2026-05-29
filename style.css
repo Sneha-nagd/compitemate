@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    background: #f2f2f2;
+}
+
+.container,
+.form-box,
+.dashboard {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 50px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.btn,
+button {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+input,
+textarea {
+    width: 60%;
+    padding: 12px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+textarea {
+    height: 100px;
+}
+
+.post {
+    background: white;
+    padding: 15px;
+    margin: 15px auto;
+    width: 60%;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px gray;
+}
+
+.logout {
+    color: red;
+    text-decoration: none;
+}
